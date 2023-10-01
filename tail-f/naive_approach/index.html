@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Logging Server</title>
+</head>
+<body>
+
+    <h1>Live logging server</h1>
+
+    <div id = "updated-data" ></div>
+
+    <script>
+        // Function to make an HTTP request and update the element
+        function makeHttpRequest() {
+            const newline = document.createElement('br');
+
+            // Make an HTTP GET request using the fetch API
+            fetch('http://localhost:8000')
+                .then(response => response.text()) // Change this based on your API response format
+                .then(data => {
+                    // Update the element with the received data
+                    const updatedDataDiv = document.getElementById('updated-data');
+                    if (data.length > 1){
+                    updatedDataDiv.append(newline);
+                    updatedDataDiv.append(`${data}`);
+                    }
+           
+                })
+                .catch(error => {
+                    console.error('HTTP request error:', error);
+                });
+        }
+
+        // Call the function initially
+        makeHttpRequest();
+
+        // Set up a timer to call the function every 2 seconds (2000 milliseconds)
+        setInterval(makeHttpRequest, 1200);
+    </script>
+
+    <!-- <script src="index.js"></script> -->
+
+    
+</body>
+</html>
